@@ -16,7 +16,7 @@ if (args.Length <= 0)
     HelpMe();
 }
 
-var inputAction = args[0];
+var inputCommand = args[0];
 var inputFilePath = args[1];
 
 var commandMappings = new Dictionary<string, bool> {
@@ -26,7 +26,7 @@ var commandMappings = new Dictionary<string, bool> {
     { "decode", false },
 };
 
-if (!commandMappings.ContainsKey(inputAction))
+if (!commandMappings.TryGetValue(inputCommand, out var isEncode))
 {
     OutputError("Invalid command. Oh no.");
 }
@@ -51,7 +51,6 @@ if (!File.Exists(inputFilePath))
     OutputError("Missing file. Holy shit.");
 }
 
-var isEncode = commandMappings.GetValueOrDefault(inputAction);
 var resultData = await Process(inputFilePath, isEncode);
 await SaveFile(resultData, isEncode);
 
