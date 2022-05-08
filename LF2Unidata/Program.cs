@@ -60,7 +60,7 @@ async Task<char[]> Process(string fullFilePath, bool isEncode)
 
     using var file = File.OpenRead(fullFilePath);
 
-    int byteCount = 0, fileOffest = 0, bufferOffest = 0;
+    int byteCount = 0, fileOffset = 0, bufferOffset = 0;
     int headerSize = CUSTOM_HEADER.Length;
     char originalChar, key;
     char[] outputChars;
@@ -84,19 +84,19 @@ async Task<char[]> Process(string fullFilePath, bool isEncode)
     {
         for (var i = 0; i < byteCount; i++)
         {
-            bufferOffest = fileOffest + i;
+            bufferOffset = fileOffset + i;
             originalChar = (char)buffer[i];
-            key = CAESAR_CIPHER[bufferOffest % CAESAR_CIPHER.Length];
+            key = CAESAR_CIPHER[bufferOffset % CAESAR_CIPHER.Length];
             if (isEncode)
             {
-                outputChars[headerSize + bufferOffest] = (char)(originalChar + key);
+                outputChars[headerSize + bufferOffset] = (char)(originalChar + key);
             }
             else
             {
-                outputChars[bufferOffest] = (char)(originalChar - key);
+                outputChars[bufferOffset] = (char)(originalChar - key);
             }
         }
-        fileOffest += byteCount;
+        fileOffset += byteCount;
     }
     return outputChars;
 }
