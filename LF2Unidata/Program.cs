@@ -11,7 +11,7 @@ const string USAGE_MESSAGE = @"LF2Unidata
       e, encode    Encode a given plain text file to .dat LF2 data file.
       d, decode    Decode a given LF2 data file to .txt plain text file.";
 
-if (args.Length <= 0)
+if (args.Length <= 1)
 {
     HelpMe();
 }
